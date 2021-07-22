@@ -1,7 +1,5 @@
 console.log('script.js loading');
 
-
-
 const addEventFromLocalStorage = (event) =>{
     // Each Item
     const newEvent = document.createElement('div');
@@ -140,10 +138,13 @@ const onClickMarkDone = (ev) => {
     console.log(actualText);
 
     const index = events.findIndex(x => x.text == actualText && x.isDone == 0);
+    localStorage.removeItem("event"+events[index].index);
     events[index].isDone = 1;
+    events[index].index = eventCount;
 
     const eventDataJSON = JSON.stringify(events[index]);
-    localStorage.setItem("event" + events[index].index, eventDataJSON);
+    localStorage.setItem("event" + eventCount, eventDataJSON);
+    eventCount++;
 
     const thisEvent = ev.target.parentNode.parentNode.parentNode.parentNode;
     const thisEventParent = thisEvent.parentNode;
