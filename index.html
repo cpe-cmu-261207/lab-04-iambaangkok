@@ -1,19 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src='script.js' defer></script>
-	<title>Lab 04</title>
-	<!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- style sheets -->
+	<link rel="stylesheet" href="/stylesheets/google-fonts.css">
+	<link rel="stylesheet" href="/stylesheets/link-decoration.css">
+    <link rel="stylesheet" href="/stylesheets/alignment.css">
+
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- font-family: 'Roboto', sans-serif; -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+	<!-- font-family: 'Open Sans', sans-serif; -->
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+    <!-- js  -->
+    <script src="script.js" defer></script>
+
+    <title>Minimal Todo List</title>
 </head>
 
-<body>
-	<h1>Minimal Todo List</h1>
-	<input  type='text'>
-	<button>+</button>
-</body>
+<body class="bg-gray-900 ">
+    <div class="flex justify-center">
+        <div style="width: 50%;"
+        class="bg-gray-900 vertical-center max-w-screen-xl pb-36">
+            <!-- Title -->
+            <div class="flex justify-center
+            p-4 ">
+                <div class="
+                text-4xl text-white font-italic font-semibold font-style-opensans">
+                    Minimal Todo List
+                </div>
+            </div>
+            <!-- Input & Button -->
+            <div 
+            class="flex justify-center max-w-screen-lg pb-4">
+                <input id="input-field" type = 'text' placeholder="What do i have to do today?"
+                style="width:100%;"
+                class="shadow-md ring-1 rounded-full ring-white focus:ring-gray-900
+                outline-none
+                px-4 py-1 mr-2
+                font-style-opensans">
+                <button id="add-button" style="outline:0;"
+                class="group
+                hover:bg-white
+                shadow-md ring-1 rounded-full ring-white" 
+                onclick='onClickAddEvent()'>  
+                    <div class="text-white shadow-none">
+                        <div class="font-style-opensans text-lg  group-hover:text-gray-900  
+                        px-2 
+                        align-middle">
+                        +
+                        </div> 
+                    </div>
+                </button>
+            </div>
+            <!-- Event List -->
+            <div id="event-list" class="text-white text-lg pb-2">
+                
+            </div>
+            <!-- Completed Event List -->
+            <div id="completed-event-list" class="border-t-2 pt-2 text-white text-lg">
 
+            </div>
+        </div>
+        
+        
+    </div>
+    
+
+</body>
 </html>
