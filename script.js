@@ -1,38 +1,39 @@
-console.log('script.js loaded');
+console.log('script.js loading');
 
 
-
-
-var events = [];
-const eventList = document.querySelector('#event-list');
-const completedEventList = document.querySelector('#completed-event-list');
-const input = document.querySelector('#input-field');
-const addEventButton = document.querySelector('#add-button');
-input.addEventListener("keyup", (ev) => {
-    if (ev.key === "Enter") {
-        ev.preventDefault();
-        addEventButton.click();
-    }
-});
 
 const addEventFromLocalStorage = (event) =>{
-    console.log(event.item);
-}
+    // Each Item
+    const newEvent = document.createElement('div');
+    newEvent.setAttribute('class', 'grid grid-cols-5');
 
-for(let i = 0 ; i < localStorage.length; ++i){
-    var item = localStorage.getItem("event" + i);
-    if(item == undefined || item == null){
-        continue;
-    }else{
-        events.push({index:i,item:item});
-        console.log(events[i]);
-        addEventFromLocalStorage(events[i]);
-    }
+    // Text
+    const text = document.createElement('div');
+    text.setAttribute('class', 'break-all col-span-4 flex px-1');
+    text.innerHTML = "• " + event.text;
+    text.style.textDecoration = (event.isDone)? "line-through":"";
+    newEvent.append(text);
+
+    // Buttons
+    newEvent.addEventListener('mouseenter', onMouseEnterCreateButtons)
+    newEvent.addEventListener('mouseleave', onMouseLeaveRemoveButtons)
+
     
+    console.log(event.isDone);
+    if(event.isDone == 0){
+        if(eventList.childElementCount == 0){
+            eventList.append(newEvent);
+        }else{
+            eventList.insertBefore(newEvent, eventList.firstChild);
+        }
+    }else if(event.isDone == 1){
+        if(completedEventList.childElementCount == 0){
+            completedEventList.append(newEvent);
+        }else{
+            completedEventList.insertBefore(newEvent, completedEventList.firstChild);
+        }
+    }
 }
-
-
-
 
 const onClickAddEvent = () =>{
     if(input.value != ""){
@@ -43,6 +44,8 @@ const onClickAddEvent = () =>{
         // Text
         const text = document.createElement('div');
         text.setAttribute('class', 'break-all col-span-4 flex px-1');
+        text.innerHTML = input.value;
+        const inputVal = text.innerHTML;
         text.innerHTML = "• " + input.value;
         input.value = "";
         newEvent.append(text);
@@ -51,9 +54,12 @@ const onClickAddEvent = () =>{
         newEvent.addEventListener('mouseenter', onMouseEnterCreateButtons)
         newEvent.addEventListener('mouseleave', onMouseLeaveRemoveButtons)
 
-        localStorage.setItem("event" + events.length, newEvent);
-        events.push(newEvent);
-
+        console.log(inputVal);
+        const eventData = {index:eventCount, text:inputVal, isDone:0};
+        const eventDataJSON = JSON.stringify(eventData);
+        localStorage.setItem("event" + eventCount, eventDataJSON);
+        eventCount++;
+        events.push(eventData);
         if(eventList.childElementCount == 0){
             eventList.append(newEvent);
         }else{
@@ -130,6 +136,15 @@ const onClickMarkDone = (ev) => {
         text.style.textDecoration = "line-through";
     }
 
+    const actualText = text.innerHTML.substring(2);
+    console.log(actualText);
+
+    const index = events.findIndex(x => x.text == actualText && x.isDone == 0);
+    events[index].isDone = 1;
+
+    const eventDataJSON = JSON.stringify(events[index]);
+    localStorage.setItem("event" + events[index].index, eventDataJSON);
+
     const thisEvent = ev.target.parentNode.parentNode.parentNode.parentNode;
     const thisEventParent = thisEvent.parentNode;
     thisEventParent.removeChild(thisEvent);
@@ -137,12 +152,20 @@ const onClickMarkDone = (ev) => {
 }
 
 const onClickDelete = (ev) => {
+    const text = ev.target.parentNode.parentNode.parentNode.previousSibling;
+    const actualText = text.innerHTML.substring(2);
     const thisEvent = ev.target.parentNode.parentNode.parentNode.parentNode;
-    const index = events.findIndex(x => x == thisEvent);
-    //events.splice(index);
-    localStorage.removeItem("event"+index);
+
+    console.log(actualText);
+    const index = events.findIndex(x => x.text == actualText);
+    localStorage.removeItem("event"+events[index].index);
+    
+    events.splice(index,1);
+
     const thisEventParent = thisEvent.parentNode;
     thisEventParent.removeChild(thisEvent);
+
+    console.log(events);
 }
 
 const addToCompletedEventList = (event) =>{
@@ -152,3 +175,44 @@ const addToCompletedEventList = (event) =>{
         completedEventList.insertBefore(event, completedEventList.firstChild);
     }
 }
+
+
+console.log('script.js loaded');
+console.log('script.js executing');
+
+var events = [];
+const eventList = document.querySelector('#event-list');
+const completedEventList = document.querySelector('#completed-event-list');
+const input = document.querySelector('#input-field');
+const addEventButton = document.querySelector('#add-button');
+var eventCount = 0;
+
+// Press Enter to Add
+input.addEventListener("keyup", (ev) => {
+    if (ev.key === "Enter") {
+        ev.preventDefault();
+        addEventButton.click();
+    }
+});
+
+for(let i = 0 ; i < localStorage.length; ++i){
+    var item = localStorage.getItem("event" + i);
+    if(item == undefined || item == null){
+        continue;
+    }else{
+        const eventData = JSON.parse(item);
+        localStorage.removeItem("event"+eventData.index);
+
+        eventData.index = eventCount;
+
+        const eventDataJSON = JSON.stringify(eventData);
+        localStorage.setItem("event" + eventCount, eventDataJSON);
+
+        eventCount++;
+        events.push(eventData);
+        console.log(events[events.length-1]);
+        addEventFromLocalStorage(events[events.length-1]);
+    }
+}
+
+console.log('script.js executed');
