@@ -7,7 +7,7 @@ const addEventFromLocalStorage = (event) =>{
 
     // Text
     const text = document.createElement('div');
-    text.setAttribute('class', 'break-all col-span-4 flex px-1');
+    text.setAttribute('class', 'break-all col-span-4 flex font-style-opensans font-light transform hover:scale-110 duration-200 hover:translate-x-4 px-1');
     text.innerHTML = "• " + event.text;
     text.style.textDecoration = (event.isDone)? "line-through":"";
     newEvent.append(text);
@@ -41,7 +41,7 @@ const onClickAddEvent = () =>{
 
         // Text
         const text = document.createElement('div');
-        text.setAttribute('class', 'break-all col-span-4 flex px-1');
+        text.setAttribute('class', 'break-all col-span-4 flex font-style-opensans font-light transform hover:scale-110 duration-200 hover:translate-x-4 px-1');
         text.innerHTML = input.value;
         const inputVal = text.innerHTML;
         text.innerHTML = "• " + input.value;
@@ -85,7 +85,7 @@ const onMouseEnterCreateButtons = (ev) => {
         doneButton.addEventListener('click', onClickMarkDone);
     
         const doneButtonInnerDiv = document.createElement('div');
-        doneButtonInnerDiv.setAttribute('class', "font-style-opensans text-lg ring-1 rounded-full ring-white group-hover:bg-white group-hover:text-gray-900 px-2 align-middle");
+        doneButtonInnerDiv.setAttribute('class', "transform hover:scale-90 duration-200 font-style-opensans text-lg ring-1 rounded-full ring-white group-hover:bg-white group-hover:text-gray-900 px-2 align-middle");
         doneButtonInnerDiv.innerHTML="✔"
     
         doneButton.append(doneButtonInnerDiv);
@@ -104,7 +104,7 @@ const onMouseEnterCreateButtons = (ev) => {
     deleteButton.addEventListener('click', onClickDelete);
 
     const deleteButtonInnerDiv = document.createElement('div');
-    deleteButtonInnerDiv.setAttribute('class', "font-style-opensans text-lg ring-1 rounded-full ring-white group-hover:bg-white group-hover:text-gray-900 px-1 align-middle");
+    deleteButtonInnerDiv.setAttribute('class', "transform hover:scale-90 duration-200 font-style-opensans text-lg ring-1 rounded-full ring-white group-hover:bg-white group-hover:text-gray-900 px-1 align-middle");
     deleteButtonInnerDiv.innerHTML="❌"
 
     deleteButton.append(deleteButtonInnerDiv);
