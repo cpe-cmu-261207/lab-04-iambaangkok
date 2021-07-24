@@ -4,4 +4,12 @@
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
-  }
+}
+
+.vertical-bottom {
+  margin: 0;
+  position: absolute;
+  top: 95%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
