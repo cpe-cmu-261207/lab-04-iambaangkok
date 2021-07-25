@@ -200,7 +200,14 @@ input.addEventListener("keyup", (ev) => {
 });
 
 for(let i = 0 ; i < localStorage.length; ++i){
-    var item = localStorage.getItem("event" + i);
+    var offset = 0;
+    var item = localStorage.getItem("event" + (i + offset));
+    while((item == undefined || item == null) && offset < 100){
+        offset++;
+        item = localStorage.getItem("event" + (i + offset));
+        console.log(offset);
+    }
+    
     if(item == undefined || item == null){
         continue;
     }else{
