@@ -69,12 +69,17 @@ const onClickAddEvent = () =>{
     }
 }
 
+const onClickReset = () =>{
+    localStorage.clear();
+    location.reload();
+}
+
 const onMouseEnterCreateButtons = (ev) => {
     // Container
     const buttonContainer = document.createElement('div');
     buttonContainer.setAttribute('class', 'col-span-1 flex justify-center');
 
-    // Done Button : will not appear if already done
+    // Done and Delete Button : will not appear if already done
     if(ev.target.firstChild.style.textDecoration != "line-through"){
         const doneButtonContainer = document.createElement('div');
         doneButtonContainer.setAttribute('class', "align-self-center");
@@ -91,26 +96,24 @@ const onMouseEnterCreateButtons = (ev) => {
         doneButton.append(doneButtonInnerDiv);
         doneButtonContainer.append(doneButton);
         buttonContainer.append(doneButtonContainer);
+        // Delete Button
+        const deleteButtonContainer = document.createElement('div');
+        deleteButtonContainer.setAttribute('class', "align-self-center");
+
+        const deleteButton = document.createElement('button');
+        deleteButton.setAttribute('class', 'group mx-2 text-green-500');
+        deleteButton.setAttribute('style', 'outline:0;');
+        deleteButton.addEventListener('click', onClickDelete);
+
+        const deleteButtonInnerDiv = document.createElement('div');
+        deleteButtonInnerDiv.setAttribute('class', "transform hover:scale-90 duration-200 font-style-opensans text-lg ring-1 rounded-full ring-white group-hover:bg-white group-hover:text-gray-900 px-1 align-middle");
+        deleteButtonInnerDiv.innerHTML="❌"
+
+        deleteButton.append(deleteButtonInnerDiv);
+        deleteButtonContainer.append(deleteButton);
+        buttonContainer.append(deleteButtonContainer);
     }
     
-
-    // Delete Button
-    const deleteButtonContainer = document.createElement('div');
-    deleteButtonContainer.setAttribute('class', "align-self-center");
-
-    const deleteButton = document.createElement('button');
-    deleteButton.setAttribute('class', 'group mx-2 text-green-500');
-    deleteButton.setAttribute('style', 'outline:0;');
-    deleteButton.addEventListener('click', onClickDelete);
-
-    const deleteButtonInnerDiv = document.createElement('div');
-    deleteButtonInnerDiv.setAttribute('class', "transform hover:scale-90 duration-200 font-style-opensans text-lg ring-1 rounded-full ring-white group-hover:bg-white group-hover:text-gray-900 px-1 align-middle");
-    deleteButtonInnerDiv.innerHTML="❌"
-
-    deleteButton.append(deleteButtonInnerDiv);
-    deleteButtonContainer.append(deleteButton);
-    buttonContainer.append(deleteButtonContainer);
-
     ev.target.append(buttonContainer);
 }
 
